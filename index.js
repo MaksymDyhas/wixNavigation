@@ -3,10 +3,13 @@ import { Navigation } from "react-native-navigation";
 import Profile from "./src/screens/Profile";
 import HomeScreen from "./src/screens/HomeScreen";
 import ThirdPage from "./src/screens/ThirdPage";
+import { withNavigationProvider } from "react-native-navigation-hooks";
+import WrapScreen from "./src/config/routes";
+import store from "./src/redux/store";
 
-Navigation.registerComponent("WelcomeScreen", () => HomeScreen);
-Navigation.registerComponent("Profile", () => Profile);
-Navigation.registerComponent("ThirdPage", () => ThirdPage);
+Navigation.registerComponent("WelcomeScreen", () => withNavigationProvider(WrapScreen(HomeScreen, store)) , () => HomeScreen);
+Navigation.registerComponent("Profile", () => withNavigationProvider(WrapScreen(Profile, store)) , () => Profile);
+Navigation.registerComponent("ThirdPage", () => withNavigationProvider(WrapScreen(ThirdPage, store)) , () => ThirdPage);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({

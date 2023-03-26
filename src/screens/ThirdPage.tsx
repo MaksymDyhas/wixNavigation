@@ -1,25 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
-import { Navigation } from "react-native-navigation";
+import { Navigation, NavigationFunctionComponent } from "react-native-navigation";
+
+interface Props {
+  name: 'string'
+}
 
 
-const HomeScreen = (props) => {
-  const goToScreen = (screenName) => {
-    Navigation.push(props.componentId, {
-      component: {
-        name: screenName, // Push the screen registered with the 'Settings' key
-        options: {
-          topBar: {
-            title: {
-              text: screenName, // Set the TopBar title of the new Screen
-            },
-          },
-        },
-      },
-    })
-  };
-
+const ThirdPage: NavigationFunctionComponent<Props> = (props) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "rgba(238,19,19,0.8)", justifyContent: "center" }}>
@@ -59,4 +48,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default HomeScreen;
+export default ThirdPage;

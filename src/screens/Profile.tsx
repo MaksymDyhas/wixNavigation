@@ -1,22 +1,31 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { Navigation } from "react-native-navigation";
+import { SafeAreaView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { Navigation, NavigationFunctionComponent } from "react-native-navigation";
+import { useAppDispatch, useAppSelector } from "../redux/store";
+import { decrement, increment } from "../redux/slices/counterSlice";
 
-const Profile = (props) => {
-  const goToScreen = (screenName) => {
+interface Props {
+  name: "string";
+}
+
+const Profile: NavigationFunctionComponent<Props> = (props) => {
+  const goToScreen = (screenName: string) => {
     Navigation.push(props.componentId, {
       component: {
         name: screenName, // Push the screen registered with the 'Settings' key
         options: {
           topBar: {
             title: {
-              text: screenName, // Set the TopBar title of the new Screen
-            },
-          },
-        },
-      },
-    })
+              text: screenName // Set the TopBar title of the new Screen
+            }
+          }
+        }
+      }
+    });
   };
+
+  const dispatch = useAppDispatch();
+  const value = useAppSelector(state => state.counter.value);
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", paddingHorizontal: 15, backgroundColor: "#dc3d3d" }}>
@@ -36,10 +45,42 @@ const Profile = (props) => {
       <View style={styles.bottomOfPage}>
         <Text style={styles.labelBio}>BIOGRAPHY</Text>
         <TouchableHighlight style={styles.bio}
-        onPress={()=>goToScreen('ThirdPage')}
+                            onPress={() => goToScreen("ThirdPage")}
         >
           <Text style={styles.aboutInBio}>Next page</Text>
         </TouchableHighlight>
+
+        <View>
+          <Text style={{ alignSelf: "center", marginVertical: 20, color: "white", fontSize: 26 }}>{value}</Text>
+          <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+            <TouchableOpacity onPress={() => {
+              dispatch(increment(1));
+            }}><Text
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                width: 90,
+                textAlign: "center",
+                padding: 10,
+                fontSize: 26,
+                borderRadius: 20,
+                marginHorizontal: 3
+              }}>+</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              dispatch(decrement(1));
+            }}><Text
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                width: 90,
+                textAlign: "center",
+                padding: 10,
+                fontSize: 26,
+                borderRadius: 20,
+                marginHorizontal: 3
+              }}>-</Text></TouchableOpacity>
+          </View>
+        </View>
 
       </View>
     </SafeAreaView>
@@ -52,7 +93,7 @@ const styles = StyleSheet.create({
       flexDirection:
         "row",
       justifyContent: "space-between",
-      alignItems: "center",
+      alignItems: "center"
     },
     forPhoto: {
       width: 150,
@@ -61,40 +102,40 @@ const styles = StyleSheet.create({
       borderWidth: 3,
       borderColor: "rgb(250,250,250)",
       justifyContent: "center",
-      alignItems: "center",
+      alignItems: "center"
     },
     photo: {
       marginTop: 3,
       width: 140,
       height: 140,
-      borderRadius: 70,
+      borderRadius: 70
     },
     forInfo: {
       flex: 1,
       height: 150,
       marginLeft: 20,
-      justifyContent: "center",
+      justifyContent: "center"
     },
     nameAndSurname: {
       marginVertical: 10,
       padding: 5,
       borderBottomWidth: 1,
-      borderColor: "#1e1c1c",
+      borderColor: "#1e1c1c"
     },
     name: {
       fontSize: 18,
       fontWeight: "400",
-      color: "#f5f2c2",
+      color: "#f5f2c2"
     },
     bottomOfPage: {
-      flex: 2,
+      flex: 2
     },
     labelBio: {
       marginBottom: 10,
       fontSize: 22,
       fontFamily: "EduNSWACTFoundation-Bold",
       color: "#f5f2c2",
-      textAlign: "center",
+      textAlign: "center"
     },
     bio: {
       borderWidth: 2,
@@ -102,27 +143,27 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       marginTop: 20,
       backgroundColor: "rgb(17,17,17)",
-      padding: 20,
+      padding: 20
     },
     aboutInBio: {
       fontSize: 26,
       fontFamily: "EduNSWACTFoundation-Medium",
       color: "#f5f2c2",
-      textAlign: "center",
-    },
+      textAlign: "center"
+    }
 
-  },
+  }
 );
 
 Profile.options = {
   topBar: {
     title: {
-      text: "Profile",
-    },
+      text: "Profile"
+    }
   },
   bottomTab: {
-    text: "Profile",
-  },
+    text: "Profile"
+  }
 };
 
 

@@ -1,10 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { Navigation, NavigationFunctionComponent } from "react-native-navigation";
+import Counter from "../components/Counter";
 
-import { Navigation } from "react-native-navigation";
+interface Props {
+  name: "string";
+}
 
-
-const HomeScreen = (props) => {
+const HomeScreen: NavigationFunctionComponent<Props> = (props) => {
   const goToScreen = () => {
     Navigation.push(props.componentId, {
       component: {
@@ -12,17 +15,18 @@ const HomeScreen = (props) => {
         options: {
           topBar: {
             title: {
-              text: "Profile", // Set the TopBar title of the new Screen
-            },
-          },
-        },
-      },
-    })
+              text: "Profile" // Set the TopBar title of the new Screen
+            }
+          }
+        }
+      }
+    });
   };
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: "rgba(238,19,19,0.8)", justifyContent: "center" }}>
+    <View style={{ flex: 1, backgroundColor: "rgba(238,19,19,0.8)", justifyContent: "space-around" }}>
+      <Counter />
       <TouchableHighlight
         style={styles.otherFontsForMask}
         onPress={goToScreen}>
@@ -41,23 +45,23 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
     borderColor: "white",
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   textSemiBold: {
     fontSize: 30,
     color: "white",
     marginVertical: 4,
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 });
 
 HomeScreen.options = {
   topBar: {
     title: {
       text: "Home",
-      color: "white",
-    },
-  },
+      color: "white"
+    }
+  }
 };
 
 export default HomeScreen;
